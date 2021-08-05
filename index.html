@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .line {
+            border: 5px solid;
+            border-style: ridge;
+            padding: 3px;
+            margin-top: 3px;
+            background-color: rgb(233, 233, 233);
+            overflow: scroll;
+        }
+    </style>
+
+    <script type="text/javascript" src="./lib/bignumber.min.js"></script>
+    <script type="text/javascript" src="./lib/web3.js"></script>
+
+    <script type="text/javascript">
+        //web3와 커넥션
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+
+        console.log(web3)
+
+        if (web3.isConnected()) {
+            console.log("connected")
+        } else {
+            console.log("not connected")
+        }
+    </script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>모든 계정 확인</h3>
+    <div id="result" class="line"></div>
+
+    <div >
+        <h3>새 계정 생성</h3>
+        Password:<input type="password" name="" id="inputPw" placeholder="비밀번호" onfocus="this.placeholder=''"
+            onblur="this.placeholder='비밀번호'">
+        <button onclick="addAddress()">생성</button>
+        <div id="newAddress" class="line"></div>
+    </div>
+
+    <div>
+        <h3>이더 전송</h3>
+        from:<input type="text" name="보낼주소" id="fromTx" placeholder="보내는 주소" onfocus="this.placeholder=''"
+            onblur="this.placeholder='보내는 주소'">
+        to:<input type="text" name="보낼주소" id="toTx" placeholder="받는 주소" onfocus="this.placeholder=''"
+            onblur="this.placeholder='받는 주소'">
+        value:<input type="text" name="" id="sendETHCount" placeholder="수량" onfocus="this.placeholder=''"
+            onblur="this.placeholder='수량'">
+        <button onclick="sendETH()">전송</button>
+        <div id="sendETHtxValue" class="line"></div>
+    </div>
+
+    <div>
+        <h3>트랜잭션 조회</h3>
+        Tx: <input type="text" name="트랜잭션" id="txValue" placeholder="트랜잭션 해시" onfocus="this.placeholder=''"
+            onblur="this.placeholder='트랜잭션 해시'">
+        <button onclick="getTransaction()">조회</button>
+        <div id="txInfo" class="line"></div>
+    </div>
+
+    <div>
+        <h3>블록 정보 확인</h3>
+        BlockNum: <input type="number" name="블록넘버" id="blockNum1" placeholder="블록 번호" onfocus="this.placeholder=''"
+        onblur="this.placeholder='블록번호'">
+        <button onclick="cheackBlock()">확인</button>
+        <div id="blockInfo1" class="line"></div>
+    </div>
+
+    <div>
+        <h3>계정 트랜잭션 조회</h3>
+        Address:<input type="text" id="searchTx" placeholder="주소" onfocus="this.placeholder=''"
+        onblur="this.placeholder='주소'">
+        <div id="searchTxResult" class="line"></div>
+    </div>
+
+
+    <script>
+        let accounts = web3.eth.accounts
+        let balance = web3.eth.getBalance(accounts[0])
+        console.log("coinbase:" + web3.eth.coinbase)
+
+
+        // 전체 계정을 보는것
+        window.onload = function viewAccounts() {
+            let accountList = ('<table><tr><th>번호</th><th>주소</th><th>수량</th></tr>');
+            for (var i = 0; i < accounts.length; i++) {
+                accountList += ("<tr><td>") + i + ("</td><td>") + accounts[i] + ("</td><td>") + web3.fromWei(
+                    web3
+                    .eth.getBalance(accounts[i]).toNumber()) + ("ETH</td></tr>")
+            };
+            document.getElementById("result").innerHTML = accountList + ("</table>");
+        }
+        //다시 불러오기 위하여
+        function viewAccounts() {
+            let accountList = ('<table><tr><th>번호</th><th>주소</th><th>수량</th></tr>');
+            for (var i = 0; i < accounts.length; i++) {
+                accountList += ("<tr><td>") + i + ("</td><td>") + accounts[i] + ("</td><td>") + web3.fromWei(
+                    web3
+                    .eth.getBalance(accounts[i]).toNumber()) + ("ETH</td></tr>")
+            };
+            document.getElementById("result").innerHTML = accountList + ("</table>");
+        }
+
+
+        //계정을 추가하는 것
+        function addAddress() {
+            let pw = document.getElementById("inputPw").value
+            document.getElementById("newAddress").innerHTML = "<b>NewAddress</b>:" + web3.personal.newAccount("pw")
+            accounts = web3.eth.accounts
+            viewAccounts()
+        }
+
+
+        //이더 전송
+        function sendETH() {
+            let fromETH = document.getElementById("fromTx").value;
+            let toETH = document.getElementById("toTx").value;
+            let amountETH = document.getElementById("sendETHCount").value
+
+
+            var txHash = web3.eth.sendTransaction({
+                from: fromETH,
+                to: toETH,
+                value: web3.toWei(amountETH, "ether")
+            });
+            // txHash를 HTML에 전송
+            console.log(txHash);
+            document.getElementById("sendETHtxValue").innerHTML = "<b>TxHash</b>:" + txHash;
+            document.getElementById("txValue").value = txHash;
+
+            viewAccounts()
+        }
+
+        //TxHash로 Tx확인
+        function getTransaction() {
+            //입력된 TxHash를 받아옴
+            var txHash = document.getElementById("txValue").value;
+            web3.eth.getTransaction(txHash, function (error, tx) {
+                console.log(tx);
+                var viewTx = "<table>";
+                for (var key in tx) {
+                    viewTx += "<tr><th>" + key + "</th><td>" + tx[key] + "</td></tr>";
+                }
+                document.getElementById("txInfo").innerHTML = viewTx + "</table>";
+            })
+
+        }
+
+        //블록확인
+        function cheackBlock() {
+            var n4 = document.getElementById("blockNum1").value;
+            var blockInfo = web3.eth.getBlock(n4)
+            var blockInfoList = '<table>';
+
+            for (var key in blockInfo) {
+                blockInfoList += "<tr><th>" + key + "</th><td>" + blockInfo[key] + "</td></tr>";
+            }
+            document.getElementById("blockInfo1").innerHTML = blockInfoList + "</table>";
+
+        }
+
+          
+    </script>
+</body>
+
+</html>
