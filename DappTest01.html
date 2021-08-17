@@ -1,0 +1,300 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+
+    <script src="./lib/web3.min.js"></script>
+
+<body>
+
+    <div>
+        <button onclick="init()">Connect Wallet</button>
+        <div id="account"></div>
+    </div>
+
+    <!-- #2 abi -->
+    <div>
+        <button onclick="getContract()">Get Contract Instance</button>
+        <div id="contract"></div>
+    </div>
+
+
+    <!-- #5 이벤트(setName값, 주소)를 보여주는 -->
+    <div>
+        <label>Event</label>
+        <div id="eventResult"></div>
+    </div>
+
+    <div>
+        <h3>chageDay 함수</h3>
+        <input type="number" name="" id="inputChageDay">
+        <button onclick="chageDay()">chageDay</button>
+        <div id="chageDay"></div>
+    </div>
+
+    <div>
+        <h3>chageTeacher 함수</h3>
+        <input type="text" name="" id="inputChageTeacher">
+        <button onclick="chageTeacher()">chageTeacher</button>
+        <div id="chageTeacher"></div>
+    </div>
+
+    <div>
+        <h3>attendStudent 함수</h3>
+        <input type="text" name="" id="inputAttendStudent">
+        <button onclick="attendStudent()">attendStudent</button>
+        <div id="attendStudent"></div>
+    </div>
+
+    <div>
+        <h3>viewToday 함수</h3>
+        <button onclick="viewToday()">viewToday</button>
+        <div id="viewToday"></div>
+    </div>
+
+    <div>
+        <h3>viewStudent 함수</h3>
+        <input type="number" name="" id="viewStudentDay">
+        <button onclick="viewStudent1()">viewStudent</button>
+        <div id="viewStudent"></div>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    let provider;
+    let web3;
+    let account;
+    let contract;
+
+    async function init() {
+
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            try {
+                // Request account access if needed
+                await window.ethereum.enable();
+                // Acccounts now exposed
+                web3.eth.getAccounts().then(function (accounts) {
+                    account = accounts[0]
+                    document.getElementById("account").innerText = account
+                })
+            } catch (error) {}
+        }
+        // Legacy dapp browsers...
+        else if (window.web3) {
+            // Use Mist/MetaMask's provider.
+            web3 = window.web3;
+            console.log("Injected web3 detected.");
+        }
+    }
+
+
+    function getContract() {
+        // abi를 가져옴
+        let abi = [{
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [{
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "_name",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "address",
+                        "name": "_address",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "_count",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "howAttend",
+                "type": "event"
+            },
+            {
+                "inputs": [{
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                }],
+                "name": "attendStudent",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_day",
+                    "type": "uint256"
+                }],
+                "name": "chageDay",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_newTeacher",
+                    "type": "address"
+                }],
+                "name": "chageTeacher",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [{
+                        "internalType": "uint256",
+                        "name": "_day",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "index",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "viewStudent",
+                "outputs": [{
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "viewToday",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]
+        // 컨트렉트 주소
+        contract = new web3.eth.Contract(abi, "0x99Ff3f5F3323f740ad5F38a56b0621b47ccDdC7d")
+        //#1 에서 주소를 보여줌
+        document.getElementById("contract").innerText = contract._address
+        console.log(contract)
+
+        // listen event
+        contract.events.howAttend({}, function (error, event) {
+            console.log(event)
+            document.getElementById("eventResult").innerText = event.returnValues._name + ", " + event
+                .returnValues._address
+        })
+        document.getElementById("eventResult").innerText = "Listening..."
+    }
+
+    //쓰는 함수
+    //chageDay
+    function chageDay() {
+        let inputChageDay = document.getElementById("inputChageDay").value
+        contract.methods.chageDay(inputChageDay).send({
+                from: account
+            })
+            .then(function (receipt) {
+            });
+    }
+
+    function chageTeacher() {
+        let inputChageTeacher = document.getElementById("inputChageTeacher").value
+        contract.methods.chageTeacher(inputChageTeacher).send({
+                from: account
+            })
+            .then(function (receipt) {
+            });
+    }
+
+    function attendStudent() {
+        let inputAttendStudent = document.getElementById("inputAttendStudent").value
+        contract.methods.attendStudent(inputAttendStudent).send({
+                from: account
+            })
+            .then(function (receipt) {
+            });
+    }
+
+    //읽는 함수
+    //viewToday
+    function viewToday() {
+
+        contract.methods.viewToday().call()
+            .then(function (result) {
+                document.getElementById("viewToday").innerText = result
+            });
+    }
+
+    var viewStudentlength
+    var viewStudentDay
+    var viewStudentTable
+
+    function viewStudent1() {
+        console.log("1번")
+        viewStudentDay = document.getElementById("viewStudentDay").value
+
+        console.log("2번")
+        viewStudentTable = "<table><thead><tr><th>No</th><th>Name</th><th>Address</th><tr><thead><tbody>"
+
+        console.log("3번")
+        //길이를 확인
+        contract.methods.viewStudent(viewStudentDay, 0).call()
+            .then(function (result) {
+                viewStudentlength = result[2]
+                console.log("4번")
+                viewStudent2()
+            });
+    }
+
+    //테이블을 만들자
+    async function viewStudent2() {
+        console.log("5번")
+        for (var i = 0; i < viewStudentlength; i++) {
+            await contract.methods.viewStudent(viewStudentDay, i).call()
+                .then(function (result) {
+                    console.log("6번")
+                    viewStudentTable += "<tr><td>" + i + "</td>"
+                    viewStudentTable += "<td>" + result[0] + "</td>"
+                    viewStudentTable += "<td>" + result[1] + "</td></tr>"
+                })
+        };
+        viewStudent3();
+    }
+
+    function viewStudent3() {
+        console.log("7번")
+        document.getElementById("viewStudent").innerHTML = "</tbody><table>" + viewStudentTable
+    }
+</script>
+
+</html>

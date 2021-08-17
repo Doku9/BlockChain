@@ -1,0 +1,784 @@
+<!Doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+		integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+		integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+	</script>
+	<script src="./lib/web3.min.js"></script>
+
+	<style>
+		.card {
+			background: rgb(9, 9, 121);
+			background: radial-gradient(circle, rgba(9, 9, 121, 1) 21%, rgba(0, 212, 255, 1) 60%, rgba(2, 0, 36, 1) 100%);
+			border-color: rgba(128, 128, 128, 0.658);
+		}
+
+		.card-img-top {
+			height: 10em;
+			width: auto;
+		}
+
+		.card-title {
+			outline-style: inset;
+			outline-color: rgba(240, 248, 255, 0.699);
+			background-color: rgba(57, 59, 78, 0.733);
+			font-size: 2em;
+			color: rgb(255, 255, 255);
+		}
+
+		.card-atk {
+			border-style: double;
+			border-color: rgba(255, 255, 255, 0.699);
+
+			background: radial-gradient(circle, rgb(255, 247, 131) 0%, rgb(221, 150, 27) 100%);
+			width: 2em;
+			height: 2em;
+			border-radius: 2em;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 1.8em;
+			font-size: 2em;
+			font-weight: bold;
+			color: rgb(255, 255, 255);
+			-webkit-text-stroke: 2px rgb(0, 0, 0);
+		}
+
+		.card-life {
+			border-style: double;
+			border-color: rgba(255, 255, 255, 0.699);
+
+			background: radial-gradient(circle, rgba(226, 170, 170, 1) 10%, rgba(244, 56, 56, 1) 100%);
+			;
+			width: 2em;
+			height: 2em;
+			border-radius: 2em;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 1.8em;
+			font-size: 2em;
+			font-weight: bold;
+			color: rgb(255, 255, 255);
+			-webkit-text-stroke: 2px rgb(0, 0, 0);
+		}
+
+
+		.main-background {
+			background: radial-gradient(circle, rgb(209, 212, 231) 10%, rgb(0, 22, 68) 100%);
+			/* height: 10em; */
+			text-align: center;
+			vertical-align: middle;
+
+		}
+
+		.main-title {
+			color: rgb(255, 255, 255);
+			-webkit-text-stroke: 2px rgb(0, 0, 0);
+			font-size: 5em;
+			line-height: 2em;
+
+		}
+
+		.test01 {
+			background-color: rgba(165, 42, 42, 0.418);
+			border: 2px red;
+		}
+
+		.card01 {
+			display: inline-block;
+		}
+	</style>
+
+</head>
+
+<body class="bg-secondary">
+	<div id="account" class="py-2 px-2 bg-secondary text-white">
+		<button class="btn btn-primary" onclick="init()">Connect Wallet</button>
+	</div>
+
+
+	<!-- #5 이벤트(setName값, 주소)를 보여주는 이거는 알람으로 설정하자-->
+	<!-- <div class="alert alert-dark"  id="eventResult" role="alert">
+		이벤트
+	  </div> -->
+
+	<!-- 메인페이지 이미지 -->
+	<div class="main-background py-5 shadow-lg">
+		<img src="/img/Ether_Monster.png" class="img-fluid mx-auto" style="height: 10em; width: 20em;" alt="">
+	</div>
+
+	<!-- 본문 -->
+	<div class="col-10 mt-5 mx-auto bg-white rounded">
+
+		<!-- 이더몬의 설명 -->
+		<div class="px-2 py-2">
+			<h1>What is Ethermon?</h1>
+			<p>EtherMon is a card collection game.
+				<br>Draw and collect cards!!!
+				<br>If you have the same card, you can combine the cards!!!
+			</p>
+		</div>
+
+		<div class="px-2 py-2">
+			<button class="btn-lg btn-outline-primary" onclick="drawCard();">Draw card</button>
+		</div>
+
+		<!-- 카드만들기(매니저전용) -->
+		<div class="px-2 mt-5" id="makeCard">
+			<h3>Make Card(Only Manager)</h3>
+			<div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardType">Type</span>
+				<input type="text" class="form-control" placeholder="CardType" aria-label="CardType" aria-describedby="makeCardType">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardName">Name</span>
+				<input type="text" class="form-control" placeholder="CardName" aria-label="CardName" aria-describedby="makeCardName">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardImg">Img</span>
+				<input type="text" class="form-control" placeholder="CardImg" aria-label="CardImg" aria-describedby="makeCardImg">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardRarity">Rarity</span>
+				<input type="text" class="form-control" placeholder="CardRarity" aria-label="CardRarity" aria-describedby="makeCardRarity">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardATK">ATK</span>
+				<input type="text" class="form-control" placeholder="CardATK" aria-label="CardATK" aria-describedby="makeCardATK">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardLife">Life</span>
+				<input type="text" class="form-control" placeholder="CardLife" aria-label="CardLife" aria-describedby="makeCardLife">
+			  </div>
+
+			  <div class="input-group my-1">
+				<span class="input-group-text col-2" id="makeCardUpgrade">Upgrade</span>
+				<input type="text" class="form-control" placeholder="CardUpgrade" aria-label="CardUpgrade" aria-describedby="makeCardUpgrade">
+			  </div>
+
+			  <button class="btn btn-success float-end" onclick="makeCard()">Make</button>
+		</div>
+
+
+		<!-- 카드 이미지와 테이블을 볼 수 있는 곳 -->
+		<div>
+			
+			<!-- 자신의 주소를 입력 -->
+			<div class="mt-5 mx-2">
+				<h3>View Card</h3>
+				<div class="">
+					<label> Address:
+						<input type="text" id="viewCardAccount">
+					</label>
+					<button class="btn btn-outline-primary mx-1" onclick="viewCard1()">View Card</button>
+				</div>
+			</div>
+
+				<!-- 카드 테이블을 볼 수 있는 곳 -->
+				<table class="table">
+					<thead class="table-light">
+						<tr>
+							<th class="col-1">No</th>
+							<th class="col-2">Type</th>
+							<th class="col-2">Name</th>
+							<th class="col-1">Rarity</th>
+							<th class="col-1">ATK</th>
+							<th class="col-1">Life</th>
+							<th class="col-1">Upgrade</th>
+						</tr>
+					</thead>
+					<!-- 검색하면 내용이 들어감 -->
+					<tbody id="viewCard">
+					</tbody>
+				</table>
+
+
+				<div class="my-2 mx-2" id="sendCardForm">
+					<h3>Send Card</h3>
+					<label for="">Card Number
+						<input type="number" name="" id="sendCardNum">
+					</label>
+					<label for="">Address
+						<input type="text" name="" id="sendCardAddress">
+					</label>
+					<button class="btn btn-outline-success mx-1" onclick="sendCard()">Send Card</button>
+				</div>
+
+				<div class=" my-2 mx-2" id="upgradeCardForm">
+					<h3>Upgrade Card</h3>
+					<label for="">Card Number1
+						<input type="number" name="" id="upgradeCardNum1">
+					</label>
+					<label for="">Card Number2
+						<input type="text" name="" id="upgradeCardNum2">
+					</label>
+					<button class="btn btn-outline-success mx-1" onclick="upgradeCard()">Card Upgrade</button>
+				</div>
+
+				<!-- 카드이미지 볼 수 있는 곳 -->
+
+				<div id="loadCard" class=" px-2 py-2">
+				</div>
+
+		</div>
+
+</body>
+
+<script type="text/javascript">
+	let provider;
+	let web3;
+	let account;
+	let contract;
+	let Manager;
+
+	// window.onload = init()
+
+	async function init() {
+
+		if (window.ethereum) {
+			web3 = new Web3(window.ethereum);
+			try {
+				// Request account access if needed
+				await window.ethereum.enable();
+				// Acccounts now exposed
+				web3.eth.getAccounts().then(function (accounts) {
+					account = accounts[0]
+					document.getElementById("account").innerText = "Connect Account:" + " " + account
+				})
+			} catch (error) {}
+		}
+		// Legacy dapp browsers...
+		else if (window.web3) {
+			// Use Mist/MetaMask's provider.
+			web3 = window.web3;
+			console.log("Injected web3 detected.");
+		}
+		getContract()
+		
+	}
+
+
+	function getContract() {
+		// abi를 가져옴
+		let abi = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "cardName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "drawLegendaryCardEvent",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "AllCardList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "cardType",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardImage",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardRarity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatATK",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatLife",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardUpgrade",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "CommonCardList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "cardType",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardImage",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardRarity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatATK",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatLife",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardUpgrade",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "LegendaryCardList",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "cardType",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "cardImage",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardRarity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatATK",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardStatLife",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cardUpgrade",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "drawCard",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_cardType",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_cardName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_cardImage",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_cardRarity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_cardStatATK",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_cardStatLife",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_cardUpgrade",
+				"type": "uint256"
+			}
+		],
+		"name": "makeCard",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "manager",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_num",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "sendCard",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_num1",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_num2",
+				"type": "uint256"
+			}
+		],
+		"name": "upgradeCard",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_num",
+				"type": "uint256"
+			}
+		],
+		"name": "viewCard",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "cardType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardImage",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardRarity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatATK",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatLife",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardUpgrade",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Dapp03.card",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "viewCardLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "viewManager",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+		// 컨트렉트 주소
+		contract = new web3.eth.Contract(abi, "0xa80c81405dcD42b71d1636e3f13EdC1b1b270147")
+		//#1 에서 주소를 보여줌
+		console.log(contract)
+
+		// listen event
+		contract.events.drawLegendaryCardEvent({}, function (error, event) {
+			console.log(event)
+			document.getElementById("eventResult").innerText = event.returnValues.userAddress + ", " + event
+				.returnValues.cardName
+		})
+		document.getElementById("eventResult").innerText = "Listening..."
+	}
+
+	//쓰는 함수 (makeCard/ darwCard/ sendCard/ upgradeCard)
+
+
+	async function viewTest() {
+		await contract.methods.viewManager().call()
+			.then(function (result) {
+				console.log(result);
+				Manager = result
+			});
+
+			if (account == Manager) {
+				console.log("Manager")
+			} else {console.log("User")}
+}
+
+	function makeCard() {
+		var makeCardType = document.getElementById("makeCardType").value
+		var makeCardName = document.getElementById("makeCardName").value
+		var makeCardImg = document.getElementById("makeCardImg").value
+		var makeCardRarity = document.getElementById("makeCardRarity").value
+		var makeCardATK = document.getElementById("makeCardATK").value
+		var makeCardLife = document.getElementById("makeCardLife").value
+		var makeCardUpgrade = document.getElementById("makeCardUpgrade").value
+
+		contract.methods.makeCard(makeCardType,makeCardName,makeCardImg,makeCardRarity,makeCardATK,makeCardLife,makeCardUpgrade).send({
+				from: account
+			})
+			.then(function (receipt) {});
+	}
+
+	function drawCard() {
+		contract.methods.drawCard().send({
+				from: account
+			})
+			.then(function (receipt) {});
+			viewCard1()
+	}
+
+	function sendCard() {
+		var sendCardAddress = document.getElementById("sendCardAddress").value
+		var sendCardNum = document.getElementById("sendCardNum").value
+
+		contract.methods.sendCard(sendCardNum, sendCardAddress).send({
+				from: account
+			})
+			.then(function (receipt) {});
+			viewCard1()
+	}
+
+	function upgradeCard() {
+		var upgradeCardNum1 = document.getElementById("upgradeCardNum1").value
+		var upgradeCardNum2 = document.getElementById("upgradeCardNum2").value
+		contract.methods.upgradeCard(upgradeCardNum1, upgradeCardNum2).send({
+				from: account
+			})
+			.then(function (receipt) {});
+
+			viewCard1()
+	}
+
+	//읽는 함수
+	//viewCard
+
+	var viewCardlength
+	var viewCardAccount
+	var viewCardTable
+	var viewCardImg
+
+	function viewCard1() {
+		viewCardTable = null
+		viewCardImg = ""
+
+		viewCardAccount = document.getElementById("viewCardAccount").value
+		viewCardTable = ""
+		//길이를 확인
+		contract.methods.viewCardLength(viewCardAccount).call()
+			.then(function (result) {
+				viewCardlength = result
+				viewCard2()
+			});
+	}
+
+	//테이블을 만들자
+	async function viewCard2() {
+		for (var i = 0; i < viewCardlength; i++) {
+			await contract.methods.viewCard(viewCardAccount, i).call().then(console.log("Loading My Cards..."))
+				.then(function (result) {
+					if (result[0] != "") {
+						//cardType
+						// console.log(result[0]);
+						//cardName
+						// console.log(result[1]);
+						//cardImage
+						// console.log(result[2]);
+						//cardRarity
+						// console.log(result[3]);
+						//cardStatATK
+						// console.log(result[4]);
+						//cardStatLife
+						// console.log(result[5]);
+						//cardUpgrade
+						// console.log(result[6]);
+						viewCardTable += "<tr ><td>" + i + "</td>"
+						viewCardTable += "<td>" + result[0] + "</td>"
+						viewCardTable += "<td>" + result[1] + "</td>"
+						viewCardTable += "<td>" + result[3] + "</td>"
+						viewCardTable += "<td>" + result[4] + "</td>"
+						viewCardTable += "<td>" + result[5] + "</td>"
+						viewCardTable += "<td>" + result[6] + "</td></tr>"
+
+						viewCardImg +=
+							'<div class="card card01 mx-1 my-1 col-2 border-5" style="width: 15rem;"><h5 class="card-title mx-1 my-3">' +
+							result[1] + '</h5><img src="/img/' + result[2] +'.gif" class="card-img-top"><div class="card-body"><span class="card-atk float-start">' +
+							result[4] + '</span><span class="card-life float-end">' + result[5] +
+							'</span></div></div>'
+					}
+				})
+		};
+		viewCard3();
+	}
+
+	//HTML에 표시
+	function viewCard3() {
+		document.getElementById("viewCard").innerHTML = viewCardTable
+		document.getElementById("loadCard").innerHTML = viewCardImg
+	}
+</script>
+
+</html>
