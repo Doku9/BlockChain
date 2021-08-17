@@ -137,46 +137,53 @@
 			<h3>Make Card(Only Manager)</h3>
 			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardType">Type</span>
-				<input type="text" class="form-control" placeholder="CardType" aria-label="CardType" aria-describedby="makeCardType">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardType" aria-label="CardType"
+					aria-describedby="makeCardType">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardName">Name</span>
-				<input type="text" class="form-control" placeholder="CardName" aria-label="CardName" aria-describedby="makeCardName">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardName" aria-label="CardName"
+					aria-describedby="makeCardName">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardImg">Img</span>
-				<input type="text" class="form-control" placeholder="CardImg" aria-label="CardImg" aria-describedby="makeCardImg">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardImg" aria-label="CardImg"
+					aria-describedby="makeCardImg">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardRarity">Rarity</span>
-				<input type="text" class="form-control" placeholder="CardRarity" aria-label="CardRarity" aria-describedby="makeCardRarity">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardRarity" aria-label="CardRarity"
+					aria-describedby="makeCardRarity">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardATK">ATK</span>
-				<input type="text" class="form-control" placeholder="CardATK" aria-label="CardATK" aria-describedby="makeCardATK">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardATK" aria-label="CardATK"
+					aria-describedby="makeCardATK">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardLife">Life</span>
-				<input type="text" class="form-control" placeholder="CardLife" aria-label="CardLife" aria-describedby="makeCardLife">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardLife" aria-label="CardLife"
+					aria-describedby="makeCardLife">
+			</div>
 
-			  <div class="input-group my-1">
+			<div class="input-group my-1">
 				<span class="input-group-text col-2" id="makeCardUpgrade">Upgrade</span>
-				<input type="text" class="form-control" placeholder="CardUpgrade" aria-label="CardUpgrade" aria-describedby="makeCardUpgrade">
-			  </div>
+				<input type="text" class="form-control" placeholder="CardUpgrade" aria-label="CardUpgrade"
+					aria-describedby="makeCardUpgrade">
+			</div>
 
-			  <button class="btn btn-success float-end" onclick="makeCard()">Make</button>
+			<button class="btn btn-success float-end" onclick="makeCard()">Make</button>
 		</div>
 
 
 		<!-- 카드 이미지와 테이블을 볼 수 있는 곳 -->
 		<div>
-			
+
 			<!-- 자신의 주소를 입력 -->
 			<div class="mt-5 mx-2">
 				<h3>View Card</h3>
@@ -188,51 +195,51 @@
 				</div>
 			</div>
 
-				<!-- 카드 테이블을 볼 수 있는 곳 -->
-				<table class="table">
-					<thead class="table-light">
-						<tr>
-							<th class="col-1">No</th>
-							<th class="col-2">Type</th>
-							<th class="col-2">Name</th>
-							<th class="col-1">Rarity</th>
-							<th class="col-1">ATK</th>
-							<th class="col-1">Life</th>
-							<th class="col-1">Upgrade</th>
-						</tr>
-					</thead>
-					<!-- 검색하면 내용이 들어감 -->
-					<tbody id="viewCard">
-					</tbody>
-				</table>
+			<!-- 카드 테이블을 볼 수 있는 곳 -->
+			<table class="table">
+				<thead class="table-light">
+					<tr>
+						<th class="col-1">No</th>
+						<th class="col-2">Type</th>
+						<th class="col-2">Name</th>
+						<th class="col-1">Rarity</th>
+						<th class="col-1">ATK</th>
+						<th class="col-1">Life</th>
+						<th class="col-1">Upgrade</th>
+					</tr>
+				</thead>
+				<!-- 검색하면 내용이 들어감 -->
+				<tbody id="viewCard">
+				</tbody>
+			</table>
 
 
-				<div class="my-2 mx-2" id="sendCardForm">
-					<h3>Send Card</h3>
-					<label for="">Card Number
-						<input type="number" name="" id="sendCardNum">
-					</label>
-					<label for="">Address
-						<input type="text" name="" id="sendCardAddress">
-					</label>
-					<button class="btn btn-outline-success mx-1" onclick="sendCard()">Send Card</button>
-				</div>
+			<div class="my-2 mx-2" id="sendCardForm">
+				<h3>Send Card</h3>
+				<label for="">Card Number
+					<input type="number" name="" id="sendCardNum">
+				</label>
+				<label for="">Address
+					<input type="text" name="" id="sendCardAddress">
+				</label>
+				<button class="btn btn-outline-success mx-1" onclick="sendCard()">Send Card</button>
+			</div>
 
-				<div class=" my-2 mx-2" id="upgradeCardForm">
-					<h3>Upgrade Card</h3>
-					<label for="">Card Number1
-						<input type="number" name="" id="upgradeCardNum1">
-					</label>
-					<label for="">Card Number2
-						<input type="text" name="" id="upgradeCardNum2">
-					</label>
-					<button class="btn btn-outline-success mx-1" onclick="upgradeCard()">Card Upgrade</button>
-				</div>
+			<div class=" my-2 mx-2" id="upgradeCardForm">
+				<h3>Upgrade Card</h3>
+				<label for="">Card Number1
+					<input type="number" name="" id="upgradeCardNum1">
+				</label>
+				<label for="">Card Number2
+					<input type="text" name="" id="upgradeCardNum2">
+				</label>
+				<button class="btn btn-outline-success mx-1" onclick="upgradeCard()">Card Upgrade</button>
+			</div>
 
-				<!-- 카드이미지 볼 수 있는 곳 -->
+			<!-- 카드이미지 볼 수 있는 곳 -->
 
-				<div id="loadCard" class=" px-2 py-2">
-				</div>
+			<div id="loadCard" class=" px-2 py-2">
+			</div>
 
 		</div>
 
@@ -268,301 +275,43 @@
 			console.log("Injected web3 detected.");
 		}
 		getContract()
-		
+
 	}
 
 
 	function getContract() {
 		// abi를 가져옴
-		let abi = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "cardName",
-				"type": "string"
+		let abi = [{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "userAddress",
-				"type": "address"
-			}
-		],
-		"name": "drawLegendaryCardEvent",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "AllCardList",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "cardType",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardImage",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardRarity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatATK",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatLife",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardUpgrade",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "CommonCardList",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "cardType",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardImage",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardRarity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatATK",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatLife",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardUpgrade",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "LegendaryCardList",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "cardType",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "cardImage",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardRarity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatATK",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardStatLife",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cardUpgrade",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "drawCard",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_cardType",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_cardName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_cardImage",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_cardRarity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_cardStatATK",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_cardStatLife",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_cardUpgrade",
-				"type": "uint256"
-			}
-		],
-		"name": "makeCard",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "manager",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_num",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "sendCard",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_num1",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_num2",
-				"type": "uint256"
-			}
-		],
-		"name": "upgradeCard",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_num",
-				"type": "uint256"
-			}
-		],
-		"name": "viewCard",
-		"outputs": [
-			{
-				"components": [
+				"anonymous": false,
+				"inputs": [{
+						"indexed": false,
+						"internalType": "string",
+						"name": "cardName",
+						"type": "string"
+					},
 					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "userAddress",
+						"type": "address"
+					}
+				],
+				"name": "drawLegendaryCardEvent",
+				"type": "event"
+			},
+			{
+				"inputs": [{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}],
+				"name": "AllCardList",
+				"outputs": [{
 						"internalType": "string",
 						"name": "cardType",
 						"type": "string"
@@ -598,47 +347,279 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Dapp03.card",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
+				"stateMutability": "view",
+				"type": "function"
+			},
 			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "viewCardLength",
-		"outputs": [
+				"inputs": [{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}],
+				"name": "CommonCardList",
+				"outputs": [{
+						"internalType": "string",
+						"name": "cardType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardImage",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardRarity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatATK",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatLife",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardUpgrade",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "viewManager",
-		"outputs": [
+				"inputs": [{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}],
+				"name": "LegendaryCardList",
+				"outputs": [{
+						"internalType": "string",
+						"name": "cardType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "cardImage",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardRarity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatATK",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardStatLife",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cardUpgrade",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
 			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
+				"inputs": [],
+				"name": "drawCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [{
+						"internalType": "string",
+						"name": "_cardType",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_cardName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_cardImage",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cardRarity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cardStatATK",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cardStatLife",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cardUpgrade",
+						"type": "uint256"
+					}
+				],
+				"name": "makeCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "manager",
+				"outputs": [{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [{
+						"internalType": "uint256",
+						"name": "_num",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "sendCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [{
+						"internalType": "uint256",
+						"name": "_num1",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_num2",
+						"type": "uint256"
+					}
+				],
+				"name": "upgradeCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_num",
+						"type": "uint256"
+					}
+				],
+				"name": "viewCard",
+				"outputs": [{
+					"components": [{
+							"internalType": "string",
+							"name": "cardType",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "cardName",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "cardImage",
+							"type": "string"
+						},
+						{
+							"internalType": "uint256",
+							"name": "cardRarity",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "cardStatATK",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "cardStatLife",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "cardUpgrade",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct Dapp03.card",
+					"name": "",
+					"type": "tuple"
+				}],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [{
+					"internalType": "address",
+					"name": "_address",
+					"type": "address"
+				}],
+				"name": "viewCardLength",
+				"outputs": [{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "viewManager",
+				"outputs": [{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}],
+				"stateMutability": "view",
+				"type": "function"
 			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
+		]
 		// 컨트렉트 주소
 		contract = new web3.eth.Contract(abi, "0xa80c81405dcD42b71d1636e3f13EdC1b1b270147")
 		//#1 에서 주소를 보여줌
@@ -663,10 +644,12 @@
 				Manager = result
 			});
 
-			if (account == Manager) {
-				console.log("Manager")
-			} else {console.log("User")}
-}
+		if (account == Manager) {
+			console.log("Manager")
+		} else {
+			console.log("User")
+		}
+	}
 
 	function makeCard() {
 		var makeCardType = document.getElementById("makeCardType").value
@@ -677,7 +660,8 @@
 		var makeCardLife = document.getElementById("makeCardLife").value
 		var makeCardUpgrade = document.getElementById("makeCardUpgrade").value
 
-		contract.methods.makeCard(makeCardType,makeCardName,makeCardImg,makeCardRarity,makeCardATK,makeCardLife,makeCardUpgrade).send({
+		contract.methods.makeCard(makeCardType, makeCardName, makeCardImg, makeCardRarity, makeCardATK, makeCardLife,
+				makeCardUpgrade).send({
 				from: account
 			})
 			.then(function (receipt) {});
@@ -688,7 +672,7 @@
 				from: account
 			})
 			.then(function (receipt) {});
-			viewCard1()
+
 	}
 
 	function sendCard() {
@@ -699,7 +683,7 @@
 				from: account
 			})
 			.then(function (receipt) {});
-			viewCard1()
+
 	}
 
 	function upgradeCard() {
@@ -710,7 +694,6 @@
 			})
 			.then(function (receipt) {});
 
-			viewCard1()
 	}
 
 	//읽는 함수
@@ -765,7 +748,8 @@
 
 						viewCardImg +=
 							'<div class="card card01 mx-1 my-1 col-2 border-5" style="width: 15rem;"><h5 class="card-title mx-1 my-3">' +
-							result[1] + '</h5><img src="/img/' + result[2] +'.gif" class="card-img-top"><div class="card-body"><span class="card-atk float-start">' +
+							result[1] + '</h5><img src="/img/' + result[2] +
+							'.gif" class="card-img-top"><div class="card-body"><span class="card-atk float-start">' +
 							result[4] + '</span><span class="card-life float-end">' + result[5] +
 							'</span></div></div>'
 					}
